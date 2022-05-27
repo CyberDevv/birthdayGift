@@ -1,6 +1,8 @@
 import { cache } from '@emotion/css'
 import type { AppProps } from 'next/app'
 import { CacheProvider } from '@emotion/react'
+
+import '../styles/globalStyles.css'
 import GlobalStyles from './../styles/GlobalStyles'
 
 const App = ({ Component, pageProps }: AppProps) => {
