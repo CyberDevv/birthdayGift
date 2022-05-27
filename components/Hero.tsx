@@ -1,7 +1,7 @@
 import React from 'react'
 import tw from 'twin.macro'
 import Image from 'next/image'
-import { useLottie } from 'lottie-react'
+import Lottie, { useLottie } from 'lottie-react'
 import {
   Button,
   Dialog,
@@ -20,18 +20,11 @@ const Hero = () => {
     autoplay: true,
   }
 
-  const options2 = {
-    animationData: gift,
-    loop: true,
-    autoplay: true,
-  }
-
   const [open, setOpen] = React.useState(false)
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
 
   const { View } = useLottie(options)
-  const { View: view2 } = useLottie(options2)
 
   return (
     <>
@@ -66,7 +59,6 @@ const Hero = () => {
             {View}
           </div>
         </div>
-        {view2}
       </div>
 
       {/* Modal */}
@@ -76,7 +68,9 @@ const Hero = () => {
         sx={{ '& .MuiDialog-paper': { borderRadius: '20px' } }}
       >
         <div tw="w-[400px] bg-white">
-          <div tw="bg-pink-300 w-full">{view2}</div>
+          <div tw="bg-pink-300 w-full">
+            <Lottie animationData={gift} />
+          </div>
 
           <div tw="p-8">
             <h1 tw="text-xl font-bold tracking-wide text-center">
