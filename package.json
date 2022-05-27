@@ -7,13 +7,15 @@
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
     "@emotion/css": "^11.5.0",
-    "@emotion/react": "^11.5.0",
+    "@emotion/react": "^11.9.0",
     "@emotion/server": "^11.4.0",
-    "@emotion/styled": "^11.3.0",
+    "@emotion/styled": "^11.8.1",
+    "@mui/material": "^5.8.1",
     "dotenv": "^16.0.1",
     "hardhat": "^2.9.6",
     "lottie-react": "^2.2.1",
@@ -33,6 +35,8 @@
     "babel-loader": "^8.2.3",
     "babel-plugin-macros": "^3.1.0",
     "chai": "^4.2.0",
+    "eslint": "8.16.0",
+    "eslint-config-next": "12.1.6",
     "ethereum-waffle": "^3.0.0",
     "ethers": "^5.0.0",
     "prettier": "^2.3.1",
