@@ -1,7 +1,7 @@
 import React from 'react'
 import tw from 'twin.macro'
-import Image from 'next/image'
-import Lottie, { useLottie } from 'lottie-react'
+import { ethers } from 'ethers'
+import Lottie from 'lottie-react'
 import {
   Button,
   Dialog,
@@ -11,9 +11,14 @@ import {
 } from '@mui/material'
 
 import gift from '../public/lottie/gift.json'
+import { abi } from '../contracts/sendGift.json'
 
 const Modal = ({ setOpen, open }) => {
   const [currentAccount, setCurrentAccount] = React.useState('')
+  const [message, setMessage] = React.useState('')
+  const [amount, setAmount] = React.useState('')
+
+  const contractAddress = '0x1b6B992168870be50BE8F444dA59aB5289d8B549'
 
   const handleClose = () => setOpen(false)
 
@@ -55,9 +60,27 @@ const Modal = ({ setOpen, open }) => {
       // const accounts = await ethereum.request({ method: 'eth_requestAccounts' })
       const accounts = await ethereum.enable()
       setCurrentAccount(accounts[0])
-      
     } catch (error) {
       console.log(error)
+    }
+  }
+
+  // handle send gift
+  const sendGift = async () => {
+    const { ethereum } = window
+
+    if (ethereum) {
+      const provider = new ethers.providers.Web3Provider(ethereum)
+      const signer = provider.getSigner()
+      const giftMeContract = new ethers.Contract(contractAddress, abi, signer)
+
+      const txn = await giftMeContract.sendGift(message, amount)
+      console.log('Mining...', txn.hash)
+
+      await txn.wait()
+      console.log('Mined -- ', txn.hash)
+    } else {
+      console.log("Ethereum object doesn't exist!")
     }
   }
 
@@ -84,10 +107,18 @@ const Modal = ({ setOpen, open }) => {
             </h1>
 
             <div tw="mt-8 space-y-6 flex flex-col items-center">
-              <TextField label="Message" variant="standard" fullWidth />
+              <TextField
+                label="Message"
+                value={message}
+                onChange={e => setMessage(e.target.value)}
+                variant="standard"
+                fullWidth
+              />
 
               <TextField
                 label="Send me ether"
+                value={amount}
+                onChange={e => setAmount(e.target.value)}
                 variant="standard"
                 fullWidth
                 InputProps={{
@@ -151,7 +182,10 @@ const Modal = ({ setOpen, open }) => {
                 }}
               />
 
-              <Button tw="normal-case bg-black text-white hover:(bg-[#181818])">
+              <Button
+                tw="normal-case bg-black text-white hover:(bg-[#181818])"
+                onClick={sendGift}
+              >
                 Send
               </Button>
             </div>
