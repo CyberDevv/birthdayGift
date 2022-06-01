@@ -10,16 +10,19 @@ import {
   TextField,
 } from '@mui/material'
 
+import abi from '../utils/sendGift.json'
 import gift from '../public/lottie/gift.json'
-import { abi } from '../contracts/sendGift.json'
 
 const Modal = ({ setOpen, open }) => {
   const [currentAccount, setCurrentAccount] = React.useState('')
   const [message, setMessage] = React.useState('')
-  const [amount, setAmount] = React.useState('')
+  const [name, setName] = React.useState('')
 
-  const contractAddress = '0x1b6B992168870be50BE8F444dA59aB5289d8B549'
+  const contractAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS
+  const contranctABI = abi.abi
 
+  console.log(contractAddress)
+  
   const handleClose = () => setOpen(false)
 
   // check if wallet is connected
@@ -72,9 +75,13 @@ const Modal = ({ setOpen, open }) => {
     if (ethereum) {
       const provider = new ethers.providers.Web3Provider(ethereum)
       const signer = provider.getSigner()
-      const giftMeContract = new ethers.Contract(contractAddress, abi, signer)
+      const giftMeContract = new ethers.Contract(
+        contractAddress,
+        contranctABI,
+        signer,
+      )
 
-      const txn = await giftMeContract.sendGift(message, amount)
+      const txn = await giftMeContract.sendGift(message, name, {value: ethers.utils.parseEther('0.001')})
       console.log('Mining...', txn.hash)
 
       await txn.wait()
@@ -117,8 +124,8 @@ const Modal = ({ setOpen, open }) => {
 
               <TextField
                 label="Send me ether"
-                value={amount}
-                onChange={e => setAmount(e.target.value)}
+                value={name}
+                onChange={e => setName(e.target.value)}
                 variant="standard"
                 fullWidth
                 InputProps={{
