@@ -2,3 +2,7 @@ body {
   height: 100vh;
   overflow-y: hidden;
 }
+
+.MuiLoadingButton-loadingIndicator {
+  color: white !important;
+}
