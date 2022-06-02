@@ -9,8 +9,7 @@ import { Dialog, InputAdornment, SvgIcon, TextField } from '@mui/material'
 import abi from '../utils/sendGift.json'
 import gift from '../public/lottie/gift.json'
 
-const Modal = ({ setOpen, open }) => {
-  const [currentAccount, setCurrentAccount] = React.useState('')
+const Modal = ({ setOpen, open, currentAccount, setCurrentAccount }) => {
   const [message, setMessage] = React.useState('')
   const [name, setName] = React.useState('')
   const [amount, setAmount] = React.useState('')
@@ -23,31 +22,6 @@ const Modal = ({ setOpen, open }) => {
 
   const handleClose = () => setOpen(false)
 
-  // check if wallet is connected
-  const checkWalletIsConnected = async () => {
-    try {
-      const { ethereum } = window
-
-      if (!ethereum) {
-        console.log('No web3? You should consider trying MetaMask!')
-        return
-      }
-
-      // check if we're authorized to access the user's wallet
-      const accounts = await ethereum.request({ method: 'eth_accounts' })
-
-      if (accounts.length > 0) {
-        const account = accounts[0]
-        console.log('wallet is connected!', account)
-        setCurrentAccount(account)
-      } else {
-        console.log('No authorized account found')
-      }
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
   // connect wallet
   const connectWallet = async () => {
     try {
@@ -58,13 +32,13 @@ const Modal = ({ setOpen, open }) => {
         return
       }
 
-      // const accounts = await ethereum.request({ method: 'eth_requestAccounts' })
-      const accounts = await ethereum.enable()
+      const accounts = await ethereum.request({ method: 'eth_requestAccounts' })
+      // const accounts = await ethereum.enable()
       setCurrentAccount(accounts[0])
-        toast.success('Wallet Connected!')
+      toast.success('Wallet Connected!')
     } catch (error) {
       console.log(error)
-        toast.error('An error occured!')
+      toast.error('An error occured!')
     }
   }
 
@@ -87,6 +61,7 @@ const Modal = ({ setOpen, open }) => {
         const txn = await giftMeContract.sendGift(
           message ? message : 'Happy Birthday Default!',
           name ? name : 'Anonymous Default',
+          amount ? ethers.utils.parseEther(amount) : 0,
           {
             value: ethers.utils.parseEther(amount ? amount : '0'),
           },
@@ -126,10 +101,6 @@ const Modal = ({ setOpen, open }) => {
       toast.error(error.reason)
     }
   }
-
-  React.useEffect(() => {
-    checkWalletIsConnected()
-  }, [])
 
   return (
     <Dialog

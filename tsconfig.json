@@ -23,7 +23,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-, "components/Modal.jsx"  ],
+, "components/Modal.jsx", "components/Hero.jsx"  ],
   "exclude": [
     "node_modules"
   ],

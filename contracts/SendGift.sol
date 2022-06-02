@@ -5,7 +5,6 @@ import 'hardhat/console.sol';
 
 contract GiftMe {
   uint256 totalGifts;
-  uint256 private seed;
   // address of contract deployer
   address payable owner;
 
@@ -16,6 +15,7 @@ contract GiftMe {
     address from;
     string message;
     string name;
+    uint amount;
     uint256 timestamp;
   }
 
@@ -24,7 +24,8 @@ contract GiftMe {
     address indexed from,
     uint256 timestamp,
     string name,
-    string message
+    string message,
+    uint amount
   );
 
   // constructor
@@ -36,13 +37,14 @@ contract GiftMe {
    * @dev send gift to the contract owner
    * @param _message message of the sender
    * @param _name name of the sender
+   * @param _amount amount sent by the sender
    */
-  function sendGift(string memory _message, string memory _name)
+  function sendGift(string memory _message, string memory _name, uint _amount)
     public
     payable
   {
     // add the gift to storage
-    gifts.push(Gift(msg.sender, _message, _name, block.timestamp));
+    gifts.push(Gift(msg.sender, _message, _name, _amount, block.timestamp));
 
     // require(msg.value == 1 ether);
     // console.log(msg.value);
@@ -50,7 +52,7 @@ contract GiftMe {
     totalGifts += 1;
 
     // Emit a log event when a new gift is sent
-    emit NewGift(msg.sender, block.timestamp, _name, _message);
+    emit NewGift(msg.sender, block.timestamp, _name, _message, _amount);
   }
 
   /**
