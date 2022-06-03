@@ -26,7 +26,7 @@ const Modal = ({ setOpen, open, currentAccount, setCurrentAccount }) => {
   const connectWallet = async () => {
     try {
       const { ethereum } = window
-
+      
       if (!ethereum) {
         toast.error('No web3? You should consider trying MetaMask!')
         return
@@ -108,7 +108,7 @@ const Modal = ({ setOpen, open, currentAccount, setCurrentAccount }) => {
       open={open}
       sx={{ '& .MuiDialog-paper': { borderRadius: '20px' } }}
     >
-      <div tw="w-[400px] bg-white">
+      <div tw=" w-[320px] bg-white sm:(w-[400px])">
         <div tw="bg-pink-300 w-full">
           <Lottie animationData={gift} />
         </div>

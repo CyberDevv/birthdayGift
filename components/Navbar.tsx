@@ -9,14 +9,16 @@ export interface Props {
   handleOpen: () => void
 }
 
-const Navbar = ({ open, setOpen, handleOpen }: Props) => {
+const Navbar = ({ handleOpen }: Props) => {
   return (
-    <div tw="flex items-center justify-between ">
-      <h4 tw="text-2xl font-bold tracking-wider z-10">John James</h4>
+    <div tw="flex items-center justify-between py-4 lg:(pt-10 pb-0)">
+      <h4 tw="text-xl font-bold tracking-wider z-10 lg:(text-2xl)">
+        John James
+      </h4>
 
       <Button
         onClick={handleOpen}
-        tw="bg-black text-gray-100 px-6 py-2 z-10 normal-case text-base rounded-full font-medium hover:(bg-[#181818] text-white) tracking-wider"
+        tw="bg-black text-gray-100 px-6 py-2 z-10 normal-case rounded-full font-medium hover:(bg-[#181818] text-white) tracking-wider lg:(text-base)"
       >
         Send yoaur gift
       </Button>

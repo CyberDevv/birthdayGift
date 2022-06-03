@@ -110,7 +110,7 @@ const Modal = ({ setOpen, open, currentAccount, setCurrentAccount }) => {
       open={open}
       sx={{ '& .MuiDialog-paper': { borderRadius: '20px' } }}
     >
-      <div tw="w-[420px] bg-[#1d1f20] text-white">
+      <div tw=" w-[320px] sm:(w-[420px]) bg-[#1d1f20] text-white overflow-x-hidden max-h-[calc(100vh - 20px)] overflow-y-auto lg:(max-h-[calc(100vh - 40px)]) xl:(max-h-[calc(100vh - 80px)])">
         {/* UI to shaow when account is linked */}
         {currentAccount && (
           <div tw="py-10 px-5">

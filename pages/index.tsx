@@ -14,7 +14,7 @@ const App = () => {
       </Head>
 
       <div tw="bg-primary max-h-screen">
-        <div tw="container mx-auto h-screen px-8 py-8 lg:(px-16 py-20)">
+        <div tw="container mx-auto h-screen px-8 xl:(px-16)">
           <Navbar open={open} setOpen={setOpen} handleOpen={handleOpen} />
 
           <Hero open={open} setOpen={setOpen} handleOpen={handleOpen} />
